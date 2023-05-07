@@ -1,5 +1,5 @@
 <div align='center'>
-![logo](logo.jpg)
+![logo](logo.jpg?raw='true')
 
 # Numbers Converter #
 </div>
