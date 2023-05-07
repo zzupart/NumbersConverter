@@ -3,10 +3,6 @@
     <img src="logo.jpg" alt="logo" width="300" height="300">
   </a>
   <div align='center'>
-    # Numbers Converter
+    Numbers Converter
   </div>
 </h1>
-
-<div align='center'>
-  # Numbers Converter
-</div>
