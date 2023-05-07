@@ -1,7 +1,5 @@
 <h1 align='center'>  
-  <a>
-    <img src="logo.jpg" alt="logo" width="300" height="300">
+  <img src="logo.jpg" alt="logo" width="250" height="250">
 
-    NumbersConverter
-  </a>
+  # NumbersConverter
 </h1>
