@@ -3,5 +3,6 @@
 
   NumbersConverter
 </h1>
-<h3>Description</h3>
-<h5>Project</h5>
+<h2>Description</h2>
+This is my first program using ncurses library with forms.
+If you have anything to criticize about this project(bad code, bad infrastructure or anything else) please let me know.
