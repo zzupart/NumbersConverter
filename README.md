@@ -8,7 +8,7 @@ This is my first program using ncurses library with forms. If you have anything 
 <h2>How To Build</h2>
 <h4>Follow this instructions:</h4>
 
-× Clone this repository with "git clone "
+× Clone this repository with "git clone https://github.com/zzupart/NumbersConverter"
 
 × Create a build/ directory in it with "mkdir build/"
 
@@ -20,4 +20,4 @@ This is my first program using ncurses library with forms. If you have anything 
 
 × Go to the main directory with "cd ../"
 
-× Run the executable with ./bin/NumbersConverter
+× Run the executable with "./bin/NumbersConverter"
