@@ -1,5 +1,5 @@
 <div align='center'>
-![logo](github.com/zzupart/NumbersConverter/icon.png)
+![logo](icon.png)
 
 # Numbers Converter #
 </div>
