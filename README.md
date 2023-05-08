@@ -8,16 +8,16 @@ This is my first program using ncurses library with forms, which converts number
 <h2>How To Build</h2>
 <h4>Follow this instructions:</h4>
 
-× ⬇️ Clone this repository with "git clone https://github.com/zzupart/NumbersConverter"
+× ⬇️ Clone this repository with `git clone https://github.com/zzupart/NumbersConverter`
 
-× ⏺️ Create a build/ directory in it with "mkdir build/"
+× ⏺️ Create a build/ directory in it with `mkdir build/`
 
-× ➡️ Go to this directory with "cd build/"
+× ➡️ Go to this directory with `cd build/`
 
-× ▶️ Run cmake in it with "cmake ../"
+× ▶️ Run cmake in it with `cmake ../`
 
-× ▶️ Run make in it with "make"
+× ▶️ Run make in it with `make`
 
-× ➡️ Go to the main directory with "cd ../"
+× ➡️ Go to the main directory with `cd ../`
 
-× ▶️ Run the executable with "./bin/NumbersConverter"
+× ▶️ Run the executable with `./bin/NumbersConverter`
