@@ -5,125 +5,114 @@
 
 //min base is 2 (binary)
 //max base is 36
-const char* g_symbols = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const char* symbols = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-int find_index (char arg_symbol, int arg_base = 36) {
-    for (int i = 0; i < arg_base; i++) { 
-        if (g_symbols[i] == arg_symbol) {
+int find_index(char symbol, int base = 36){
+    for(int i = 0; i < base; i++){ 
+        if(symbols[i] == symbol){
             return i;
         }
     }
     return -1;
 }
 
-char* trim (char *arg_str) {
+char* trim(char *str)
+{
 	char *end;
 
 	// trim leading space
-	while (isspace(*arg_str)) {
-		arg_str++;
-    }
+	while(isspace(*str))
+		str++;
 
-	if (*arg_str == 0) { // all spaces?
-		return arg_str;
-    }
+	if(*str == 0) // all spaces?
+		return str;
 
 	// trim trailing space
-	end = arg_str + strnlen(arg_str, 128) - 1;
+	end = str + strnlen(str, 128) - 1;
 
-	while (end > arg_str && isspace(*end)) {
+	while(end > str && isspace(*end))
 		end--;
-    }
 
 	// write new null terminator
 	*(end+1) = '\0';
 
-	return arg_str;
+	return str;
 }
 
 // Big(O) difficulty of this algorithm is T(n + ) and S()
-void convert_num (int arg_current_base, int arg_final_base, char* arg_current_num,
-                                                  std::string& arg_converted_num) {
-    if (arg_current_base > 36 || arg_current_base < 2) {  
-        arg_converted_num = "---INVALID CURRENT BASE---";
+void convert_num(int currentBase, int finalBase, const char* currentNum, std::string& convertedNum){
+    if(currentBase > 36 || currentBase < 2){ 
+        convertedNum = "---INVALID CURRENT BASE---";
         return;
     }
-    if (arg_final_base > 36 || arg_final_base < 2) {
-        arg_converted_num = "---INVALID FINAL BASE---";
+    if(finalBase > 36 || finalBase < 2){
+        convertedNum = "---INVALID FINAL BASE---";
         return;
     }
-    int num_size = strlen(arg_current_num);
-    const char* invalid_num = "---INVALID NUMBER---";
+    int numSize = strlen(currentNum);
+    const char* invalidNum = "---INVALID NUMBER---";
 
-    int point_count = 0;
-    for (int i = 0; i < num_size; i++) {
-        bool is_invalid = (find_index(arg_current_num[i], arg_current_base) == -1) && (arg_current_num[i] != '.');
-        bool is_minus = (i == 0) && (arg_current_num[0] == '-');
-        if (is_invalid && !is_minus) {
-            arg_converted_num = invalid_num;
+    int pointCount = 0;
+    for(int i = 0; i < numSize; i++){
+        bool is_invalid = (find_index(currentNum[i], currentBase) == -1) && (currentNum[i] != '.');
+        bool is_minus = (i == 0) && (currentNum[0] == '-');
+        if(is_invalid && !is_minus){
+            convertedNum = invalidNum;
             return;
         }
-        else if (arg_current_num[i] == '.') {
-            point_count++;
-        }
+        else if(currentNum[i] == '.') pointCount++;
     }
-    if (point_count > 1) {
-        arg_converted_num = invalid_num;
+    if(pointCount > 1){
+        convertedNum = invalidNum;
         return;
     }
     // no need to convert (bases are the same)
-    if (arg_current_base == arg_final_base) {
-        arg_converted_num = arg_current_num;
+    if(currentBase == finalBase){
+        convertedNum = currentNum;
         return;
     }
 
-    bool is_float = point_count == 1;
-    if (is_float) {
-        long double decimal_num = 0;
+    bool isFloat = pointCount == 1;
+    if(isFloat){
+        long double decimalNum = 0;
         // do smth
     }
-    else {
-        unsigned long long int decimal_num = 0;
+    else{
+        unsigned long long int decimalNum = 0;
         // converts currentNum to decimal
-        for (int i = 0; i < num_size; i++) {
-            if (arg_current_num[i] != '-') {
-                decimal_num += find_index(arg_current_num[i]) * pow(arg_current_base, num_size - i - 1);
+        for(int i = 0; i < numSize; i++){
+            if (currentNum[i] != '-'){
+                decimalNum += find_index(currentNum[i]) * pow(currentBase, numSize - i - 1);
             }
         }
-        if (arg_final_base == 10) {
-            arg_converted_num = std::to_string(decimal_num);
+        if(finalBase == 10){
+            convertedNum = std::to_string(decimalNum);
             return;
         }
-        // converts from decimal num to final base
-        while (true) {
-            int div_remain = decimal_num % arg_final_base;
-            decimal_num = std::floor(decimal_num / arg_final_base);
-            arg_converted_num = g_symbols[div_remain] + arg_converted_num;
-            if (decimal_num < arg_final_base) {
-                if (decimal_num != 0) {
-                    arg_converted_num = g_symbols[decimal_num] + arg_converted_num;
-                }
+        // converts from decimal to final base
+        while(true){
+            int divRemain = decimalNum % finalBase;
+            decimalNum = std::floor(decimalNum / finalBase);
+            convertedNum = symbols[divRemain] + convertedNum;
+            if(decimalNum < finalBase){
+                if (decimalNum != 0) convertedNum = symbols[decimalNum] + convertedNum;
                 break;
             }
         }
-        if (currentNum[0] == '-') {
-            convertedNum = '-' + convertedNum;
-        }
+        if(currentNum[0] == '-') convertedNum = '-' + convertedNum;
     }
 }
 
-int main () {
+int main(){
     initscr();
     noecho();
     keypad(stdscr, true);
-    int scr_height, scr_width;
-    getmaxyx(stdscr, scr_height, scr_width);
-    // middle of the screens height
-    int scr_midh = scr_height / 2;
-    // middle of the screens width
-    int scr_midw = scr_width / 2; 
+    int scrHeight, scrWidth;
+    getmaxyx(stdscr, scrHeight, scrWidth);
+    int scrMidH = scrHeight / 2;
+    int scrMidW = scrWidth / 2;
 
-	WINDOW* win_body = newwin(34, 60, scr_midh - 17, scr_midw - 30);
+	WINDOW* win_body = newwin(34, 60, scrMidH - 17, scrMidW - 30);
 	box(win_body, 0, 0);
 	WINDOW* win_form = derwin(win_body, 30, 58, 2, 1);
 	box(win_form, 0, 0);
