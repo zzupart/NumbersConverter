@@ -17,28 +17,28 @@ int find_index(char arg_symbol, int arg_base = 36) {
 }
 
 char* trim(char *arg_str) {
-	char *end;
+    char *end;
 
-	// trim leading space
-	while(*arg_str == ' ') {
-		arg_str++;
+    // trim leading space
+    while(*arg_str == ' ') {
+    	arg_str++;
     }
 
-	if(*arg_str == 0) { // all spaces?
-		return arg_str;
+    if(*arg_str == 0) { // all spaces?
+        return arg_str;
     }
 
-	// trim trailing space
-	end = arg_str + strnlen(arg_str, 128) - 1;
+    // trim trailing space
+    end = arg_str + strnlen(arg_str, 128) - 1;
 
-	while(end > arg_str && *end == ' ') {
-		end--;
+    while(end > arg_str && *end == ' ') {
+        end--;
     }
 
-	// write new null terminator
-	*(end+1) = '\0';
+    // write new null terminator
+    *(end+1) = '\0';
 
-	return arg_str;
+    return arg_str;
 }
 
 // Big(O) complexity of this algorithm is T(n + ) and S()
