@@ -114,18 +114,18 @@ int main(){
     initscr();
     noecho();
     keypad(stdscr, true);
-    int scrHeight, scrWidth;
-    getmaxyx(stdscr, scrHeight, scrWidth);
-    int scrMidH = scrHeight / 2;
-    int scrMidW = scrWidth / 2;
+    int scr_height, scr_width;
+    getmaxyx(stdscr, scr_height, scr_width);
+    int scr_midh = scr_height / 2;
+    int scr_midw = scr_width / 2;
 
-	WINDOW* win_body = newwin(34, 60, scrMidH - 17, scrMidW - 30);
+	WINDOW* win_body = newwin(34, 60, scr_midh - 17, scr_midw - 30);
 	box(win_body, 0, 0);
 	WINDOW* win_form = derwin(win_body, 30, 58, 2, 1);
 	box(win_form, 0, 0);
-    WINDOW* win_label = derwin(win_body, 3, 21, 0, 20);
-    box(win_label, 0, 0);
-    mvwprintw(win_label, 1, 2, "NUMBERS CONVERTER");
+    WINDOW* win_title = derwin(win_body, 3, 21, 0, 20);
+    box(win_title, 0, 0);
+    mvwprintw(win_title, 1, 2, "NUMBERS CONVERTER");
     
 	FIELD* fields[5];
 	fields[0] = new_field(1, 40, 4, 8, 0, 0);
@@ -153,12 +153,12 @@ int main(){
 	refresh();
 	wrefresh(win_body);
 	wrefresh(win_form);
-    wrefresh(win_label);
+    wrefresh(win_title);
     pos_form_cursor(form);
 
     int ch;
-	while ((ch = getch()) != KEY_F(1)){
-		switch(ch){
+	while ((ch = getch()) != KEY_F(1)) {
+		switch(ch) {
     		case KEY_DOWN:
 			    form_driver(form, REQ_NEXT_FIELD);
 		    	form_driver(form, REQ_END_LINE);
@@ -176,17 +176,27 @@ int main(){
 	    	// Delete the char before cursor (BACKSPACE)
     		case 127:
 		    	form_driver(form, REQ_DEL_PREV);
+                // if current and final bases are not empty
+                if(*trim(field_buffer(fields[1], 0)) != 0 && *trim(field_buffer(fiel
+                    form_driver(form, REQ_VALIDATION);
+                    std::string converted_num;
+                    convert_num(atoi(trim(field_buffer(fields[1], 0))),
+                              atoi(trim(field_buffer(fields[2], 0))),
+                              trim(field_buffer(fields[0], 0)), converted_num);
+                    set_field_buffer(fields[3], 0, converted_num.c_str());
+                    form_driver(form, REQ_VALIDATION);
+                }
 	    		break;
     		default:
                 form_driver(form, ch);
                 // if current and final bases are not empty
-                if(*trim(field_buffer(fields[1], 0)) != 0 && *trim(field_buffer(fields[2], 0)) != 0){
+                if(*trim(field_buffer(fields[1], 0)) != 0 && *trim(field_buffer(fields[2], 0)) != 0) {
                     form_driver(form, REQ_VALIDATION);
-                    std::string convertedNum;
+                    std::string converted_num;
                     convert_num(atoi(trim(field_buffer(fields[1], 0))), 
                                 atoi(trim(field_buffer(fields[2], 0))),
-                              trim(field_buffer(fields[0], 0)), convertedNum);                        
-                    set_field_buffer(fields[3], 0, convertedNum.c_str());
+                              trim(field_buffer(fields[0], 0)), converted_num);
+                    set_field_buffer(fields[3], 0, converted_num.c_str());
                     form_driver(form, REQ_VALIDATION);
                 }
 
