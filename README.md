@@ -7,6 +7,8 @@
 This is my first program using ncurses library with forms, which converts numbers between numeral systems🔄. If you have anything to criticize about this project(bad code, bad infrastructure or anything else) please let me know🔉.
 <h2>Preview</h2>
 <h4 align='center'>
+  <h4>Converting integers</h4>
+
   <img src="preview/screenshot1.jpg" alt="screen1" width="250" height="275">
   <img src="preview/screenshot2.jpg" alt="screen2" width="250" height="275">
 </h4>
