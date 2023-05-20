@@ -123,6 +123,7 @@ int main(){
 	box(win_body, 0, 0);
 	WINDOW* win_form = derwin(win_body, 30, 58, 2, 1);
 	box(win_form, 0, 0);
+    WINDOW* win_sub_form = derwin(win_form, 28, 56, 1, 1);
     WINDOW* win_title = derwin(win_body, 3, 21, 0, 20);
     box(win_title, 0, 0);
     mvwprintw(win_title, 1, 2, "NUMBERS CONVERTER");
@@ -147,14 +148,18 @@ int main(){
 
 	FORM *form = new_form(fields);
 	set_form_win(form, win_form);
-	set_form_sub(form, derwin(win_form, 28, 56, 1, 1));
+	set_form_sub(form, win_sub_form);
 	post_form(form);
-
-	refresh();
-	wrefresh(win_body);
-	wrefresh(win_form);
-    wrefresh(win_title);
     pos_form_cursor(form);
+    mvwprintw(win_body, 5, 22, "Enter the number");
+    mvwprintw(win_body, 9, 21, "Enter current base");
+    mvwprintw(win_body, 13, 20, "Enter base to convert");
+    mvwprintw(win_body, 21, 23, "Converted num");
+    refresh();
+    wrefresh(win_body);
+    wrefresh(win_form);
+    wrefresh(win_title);
+    wrefresh(win_sub_form);
 
     int ch;
 	while ((ch = getch()) != KEY_F(1)) {
@@ -173,11 +178,11 @@ int main(){
     		case KEY_RIGHT:
 			    form_driver(form, REQ_NEXT_CHAR);
 		    	break;
-	    	// Delete the char before cursor (BACKSPACE)
+	    	// Delete the char before the cursor (BACKSPACE)
     		case 127:
 		    	form_driver(form, REQ_DEL_PREV);
                 // if current and final bases are not empty
-                if(*trim(field_buffer(fields[1], 0)) != 0 && *trim(field_buffer(fiel
+                if(*trim(field_buffer(fields[1], 0)) != 0 && *trim(field_buffer(fields[2], 0)) != 0) {
                     form_driver(form, REQ_VALIDATION);
                     std::string converted_num;
                     convert_num(atoi(trim(field_buffer(fields[1], 0))),
@@ -213,6 +218,8 @@ int main(){
 	free_field(fields[3]);
 	delwin(win_form);
 	delwin(win_body);
+    delwin(win_title);
+    delwin(win_sub_form);
 	endwin();
 
     return 0;
